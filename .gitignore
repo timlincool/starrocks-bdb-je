@@ -1,3 +1,5 @@
 target
 .idea
 starrocks-bdb-je.iml
+.DS_Store
+.vscode

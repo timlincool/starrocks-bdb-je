@@ -408,34 +408,7 @@ public class RepParams {
                 throw new IllegalArgumentException
                     ("The value cannot be null or zero length: " + name);
             }
-            int colonToken = hostAndPort.lastIndexOf(":");
-            String hostName = (colonToken >= 0) ?
-                               hostAndPort.substring(0, colonToken) :
-                               hostAndPort;
-            ServerSocket testSocket = null;
-            try {
-                testSocket = new ServerSocket();
-                /* The bind will fail if the hostName does not name this m/c.*/
-                testSocket.bind(new InetSocketAddress(hostName, 0));
-                testSocket.close();
-            } catch (UnknownHostException e) {
-                throw new IllegalArgumentException
-                    ("Property: " + name +
-                     " Invalid hostname: " + hostName, e);
-            } catch (IOException e) {
-
-                /*
-                 * Server socket could not be bound to any port. Hostname is
-                 * not associated with this m/c.
-                 */
-                throw new IllegalArgumentException
-                    ("Property: " + name +
-                     " Invalid hostname: " + hostName, e);
-            }
-
-            if (colonToken >= 0) {
-                validatePort(hostAndPort.substring(colonToken + 1));
-            }
+            validateHostAndPort(hostAndPort, false);
         }
     };
 
